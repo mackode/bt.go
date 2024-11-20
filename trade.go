@@ -5,7 +5,7 @@ import (
   "time"
 )
 
-type tradeFu fimc(time.Time, float64)
+type tradeFu func(time.Time, float64)
 
 type trader struct {
   holds bool
@@ -18,8 +18,7 @@ type trader struct {
 
 func newTrader(strategy string) *trader {
   tr := trader{}
-  disp := map[string]
-  func() tradeFu{
+  disp := map[string]func() tradeFu{
     "hold": tr.strat_hold,
     "buydrop": tr.strat_buydrop,
     "firstweek": tr.strat_firstweek,
@@ -42,7 +41,7 @@ func (tr *trader) buy(dt time.Time, quote float64) {
 
 func (tr *trader) trade(dt time.Time, quote float64) {
   tr.runStrat(dt, quote)
-  tr.prevQt = quote
-  tr.prevQ = dt
+  tr.prevQ = quote
+  tr.prevDt = dt
 }
 

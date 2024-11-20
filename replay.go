@@ -6,7 +6,7 @@ import (
   "time"
 )
 
-func replay(db *sql.DB, cb func(time.Time, float)) error {
+func replay(db *sql.DB, cb func(time.Time, float64)) error {
   query := `SELECT date, quote FROM quotes ORDER BY date ASC`
   rows, err := db.Query(query)
   if err != nil {
@@ -21,7 +21,7 @@ func replay(db *sql.DB, cb func(time.Time, float)) error {
     if err != nil {
       return err
     }
-    dt, err := time.Parse("2006-01-02T15:00:05Z07:00")
+    dt, err := time.Parse("2006-01-02T15:00:05Z07:00", date)
     if err != nil {
       return err
     }
